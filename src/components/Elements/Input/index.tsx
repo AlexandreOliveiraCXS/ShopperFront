@@ -33,7 +33,7 @@ const Input: React.FC<InputProps> = ({ name, type, label, value, ...rest }) => {
     return (
         <>
             <input
-                className=""
+                className='Input'
                 type={type || 'text'}
                 id={fieldName}
                 ref={inputRef}
@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({ name, type, label, value, ...rest }) => {
                 defaultValue={defaultValue}
                 {...rest}
             />
-            {error && <span className="error">{error}</span>}
+            {error && <span className="Error">{error}</span>}
         </>
     )
 }

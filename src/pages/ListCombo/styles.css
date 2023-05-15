@@ -1,0 +1,38 @@
+.Conteiner {
+    display: flex;
+    flex-direction: column;
+  
+    width: 60vh;
+    height: 60vh;
+    border-radius: 8px;
+  
+    background-color: var(--gray-300);
+
+    color: var(--gray-800);
+
+    padding: .5rem;
+    
+    font-size: 1rem;
+}
+
+.Labels{
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-between;
+}
+
+.ConteinerPack{
+    margin-top: 16px;
+}
+
+.Label{
+    
+    font-size: 1.2rem;
+
+    >p{
+        margin-left: 2rem;
+        font-size: 1.5rem;
+        font-weight:bold;    
+    }
+}

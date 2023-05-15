@@ -1,18 +1,14 @@
-import React, { useCallback, useRef, useState } from 'react';
 import "./styles.css";
+import React, { useCallback, useRef, useState } from 'react';
 
-import Dropzone from 'react-dropzone';
+import Dropzone, { useDropzone } from 'react-dropzone';
 import getValidationErrors from '../../useful/getValidationErrors';
 
-import * as Yup from 'yup';
 import { Form } from "@unform/web";
 import { FormHandles, Scope } from "@unform/core";
 
 import postProducts from '../../useful/postProducts';
-import getValidationErrorsForm from '../../useful/getValidationErrorsForm';
 import Input from '../../components/Elements/Input';
-import { json } from 'stream/consumers';
-import { parse } from 'path';
 
 
 interface iResult {
@@ -36,6 +32,14 @@ interface Errors {
 function Drop() {
   const formRef = useRef<FormHandles>(null);
   const [csv, setCsv] = useState<iResult>();
+
+  useDropzone({
+    accept: {
+      'text/csv': [
+        '.csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values',
+      ],
+    }
+  })
 
   const parseCSV = (text: string | undefined) => {
     const reg = /"/ig;
@@ -87,9 +91,9 @@ function Drop() {
 
   const handleSubmit = useCallback(async (data: iData) => {
     formRef?.current.setErrors({});
+
     const errors = await getValidationErrors(data);
-    Promise.all([errors]);
-console.log(errors.length)    
+
     errors.forEach((e) => {
       formRef?.current.setFieldError(e.product + ".salesPrice", e.Error.toString());
     });
@@ -125,14 +129,14 @@ console.log(errors.length)
   }, []);
 
   return (
-    <div className="Conteiner">
+    <div className="Container">
       {!csv &&
         <Dropzone onDrop={acceptedFiles => onDrop(acceptedFiles)}>
           {({ getRootProps, getInputProps }) => (
-            <section>
+            <section className='Dropzone'>
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
+                <p>Insira o arquivo do tipo CVS aqui!</p>
               </div>
             </section>
           )}
@@ -141,16 +145,17 @@ console.log(errors.length)
 
       {csv && (
         <>
-          <div className="RowBody">
+          <div className="RowHeader">
             <p className="Code">{csv.header[0]}</p>
-            <p className="Description">{csv.header[1]}</p>
-            <p className="CostPrice">{csv.header[2]}</p>
+            <p className="DescriptionHeader">{csv.header[1]}</p>
+            <p className="">{csv.header[2]}</p>
             <p className="SalesPrice">{csv.header[3]}</p>
           </div>
 
           <Form
             ref={formRef}
             onSubmit={handleSubmit}
+            className="Form"
           >
             {csv.data.map((row, index) => (
               <div className="RowBody">
@@ -175,7 +180,9 @@ console.log(errors.length)
                 </Scope>
               </div>
             ))}
-            <button type="submit" >Salvar</button>
+            <div className="ContainerButton">
+            <button className="Button" type="submit" >Salvar</button>
+            </div>
           </Form>
 
         </>

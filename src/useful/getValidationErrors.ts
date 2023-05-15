@@ -6,16 +6,10 @@ interface Errors {
     Error: string[]
 }
 
-interface iRowProducts {
-    code: string,
-    description: string,
-    costPrice: string,
-    salesPrice: string,
-}
-
 export default async function getValidationErrors(prop) {
-    const validationErrors: Errors[] = [];
-    Object.keys(prop).map(async (p, index) => {
+    var validationErrors: Errors[] = [];
+
+    await Promise.all(Object.keys(prop).map(async (p, index) => {
         const Error = [];
 
         if (!parseFloat(prop[p].salesPrice))
@@ -31,18 +25,21 @@ export default async function getValidationErrors(prop) {
 
         var discount = (currentPrice - parseFloat(prop[p].salesPrice)) / currentPrice * 100;
         discount = discount < 0 ? (discount * -1) : discount;
+
         if (discount !== 0 && (discount > 10.5 || discount < 9.8))
             Error.push("O Reajuste não pode ser maior ou menor que 10% (Marketing)");
 
-
         if (Error.length > 0) {
+            console.log("Error.length: " + Error.length)
+
             validationErrors.push({
                 index: index,
                 product: p,
                 Error: Error
             });
         }
-    });
+    }));
 
+    console.log("Errors: " + validationErrors.length)
     return validationErrors;
 }

@@ -1,0 +1,36 @@
+.Container{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+
+    width:70vh;
+
+}
+
+.Link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    width: 15vh;
+    height: 15vh;
+    border-radius: 8px;
+  
+    background-color: var(--gray-300);
+        
+    >svg{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    >p{
+        margin-top:8px;
+    }
+}
+
+.Link:hover{
+    color: var(--cyan-500);
+}
