@@ -1,0 +1,43 @@
+.Conteiner {
+    display: flex;
+    flex-direction: column;
+  
+    width: 90vh;
+    height: 90vh;
+    border-radius: 8px;
+  
+    background-color: var(--gray-300);
+}
+
+.Code{
+    width: 10%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Description{
+    width: 70%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CostPrice{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 10%;
+}
+
+.SalesPrice{
+    width: 10%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
